@@ -1,0 +1,10 @@
+{
+    "restartable": "rs",
+    "env": {
+        "NODE_ENV": "development",
+        "NODE_OPTIONS": "--max-old-space-size=8192"
+    },
+    "watch": ["server/*"],
+    "ext": "js,ts,jsx,tsx,mjs,mts,json",
+    "exec": "ts-node --transpile-only --transpiler ts-node/transpilers/swc-experimental -r tsconfig-paths/register ./index.ts"
+}
