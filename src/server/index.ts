@@ -1,19 +1,29 @@
 import { fastifyTRPCPlugin, FastifyTRPCPluginOptions } from '@trpc/server/adapters/fastify'
 import Fastify from 'fastify'
-import { createContext } from './utils/context'
+import { createContext } from '~/utils/context'
 import cors from '@fastify/cors'
-import * as dotenv from 'dotenv'
-import { AppDataSource } from './dataSource'
-import { BaseRouter, baseRouter } from './baseRouter'
-import fastifySwagger from '@fastify/swagger'
-import fastifySwaggerUi from '@fastify/swagger-ui'
-dotenv.config({ path: `../..prod.env` })
+import dotenv from 'dotenv'
+import { AppDataSource } from '~/db/config/data-source'
+import helmet from '@fastify/helmet'
+import { BaseRouter, baseRouter } from '~/baseRouter'
+import fmp from '@fastify/multipart'
+import { Logger } from 'tslog'
+import { TRPCError } from '@trpc/server'
+
+dotenv.config({ path: `../../config/prod.env` })
 dotenv.config({ path: '../../config/.env' })
 
+const logger = new Logger()
+
+const app = Fastify()
+
 const main = async () => {
-    const app = Fastify()
-    // Setup CORS
+
     await app.register(cors)
+
+    const isHTTPS = process.env.HTTPS === 'true'
+
+    await app.register(fmp)
 
     await app.register(fastifyTRPCPlugin, {
         prefix: '/api',
@@ -22,26 +32,33 @@ const main = async () => {
             createContext,
             onError({ path, error }) {
                 // report to error monitoring
-                console.error(`Error in tRPC handler on path '${path}':`, error)
+                logger.error(`Error in tRPC handler on path '${path}':`, error)
             },
         } as FastifyTRPCPluginOptions<BaseRouter>['trpcOptions'],
     })
 
-    await app.register(fastifySwagger)
+    app.addHook('onRequest', async (_, reply) => {
+        if (isHTTPS) reply.header('Content-Security-Policy', 'upgrade-insecure-requests')
 
-    await app.register(fastifySwaggerUi, { prefix: '/docs' })
+        reply.header('x-xss-protection', '1; mode=block')
+    })
+
+    await app.register(helmet, {
+        contentSecurityPolicy: false,
+        crossOriginResourcePolicy: false,
+        hsts: isHTTPS,
+    })
 
     await app
         .listen({ port: Number(process.env.PORT) })
-        .then((address) => {
-            console.log(`Server started on ${address}\n: http://localhost:${process.env.PORT}/api`)
-            console.log(`Swagger started on ${address}\n: http://localhost:${process.env.PORT}/docs`)
+        .then(() => {
+            logger.info(`Server started on http://localhost:${process.env.PORT}/api`)
         })
-        .catch((e) => {
-            throw e
+        .catch((err) => {
+            logger.error(err instanceof TRPCError)
         })
 }
 
 AppDataSource.initialize()
-    .then(async () => main())
-    .catch(() => process.exit(1))
+    .then(async () => await main())
+    .catch((err) => logger.error(err instanceof TRPCError))

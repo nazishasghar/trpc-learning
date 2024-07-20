@@ -1,0 +1,3 @@
+{
+    "references": [{ "path": "./src/client" }, { "path": "./src/admin" }, { "path": "./src/server" }]
+}

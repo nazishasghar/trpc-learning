@@ -4,42 +4,12 @@ import { RouterInputs, trpc } from '~/utils/trpc'
 
 // logic
 const useIndexPage = () => {
-    const { data } = trpc.user.list.useQuery()
-    const utils = trpc.useUtils()
-    const list = data?.[0].map((i) => i)
-
-    const mutate = trpc.user.create.useMutation()
-
-    const onCreateHandler = async () => {
-        mutate.mutate(
-            {
-                name: 'Nazish',
-                email: `madara+004@notespace.jp`,
-                address: 'Patna, India',
-            },
-            { onSuccess: () => utils.user.list.refetch() },
-        )
-    }
-    return {
-        list,
-        onCreateHandler,
-    }
+    return {}
 }
 
 // view
 const IndexPageView: FC<ReturnType<typeof useIndexPage>> = (props) => {
-    const { list, onCreateHandler } = props
-
-    return (
-        <>
-            {list?.map((i) => (
-                <h1 key={i.uuid}>{JSON.stringify(i)}</h1>
-            ))}
-            <Button colorScheme="blue" onClick={onCreateHandler}>
-                Add
-            </Button>
-        </>
-    )
+    return <>Admin Side</>
 }
 
 const IndexPage: FC = () => {

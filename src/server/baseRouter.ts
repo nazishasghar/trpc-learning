@@ -1,9 +1,10 @@
-import { healthRouter } from './routers/health.router'
-import { userRouter } from './routers/user.router'
-import { router } from './trpc'
+import { publicProcedure, router } from '~/trpc'
+import { adminRouter } from './routers/admin/admin.router'
+import { clientRouter } from './routers/client/client.router'
 
 export const baseRouter = router({
-    health: healthRouter,
-    user: userRouter,
+    health: publicProcedure.query(() => 'healthy'),
+    admin: adminRouter,
+    client: clientRouter,
 })
 export type BaseRouter = typeof baseRouter

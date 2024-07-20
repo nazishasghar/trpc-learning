@@ -1,28 +1,29 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "CommonJS",
-    "lib": ["ES2020", "ES2021.String"],
-    "strict": true,
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "incremental": true,
-    "noImplicitAny": true,
-    "skipLibCheck": true,
-    "noImplicitOverride": true,
-    "forceConsistentCasingInFileNames": true,
-    "composite": true,
-    "paths": {
-      "~/*": ["./*"],
-    }
-  },
-  "exclude": ["node_modules", "dist"]
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "CommonJS",
+        "lib": ["ESNext"],
+        "strict": true,
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "baseUrl": ".",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "composite": true,
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "incremental": true,
+        "noImplicitAny": true,
+        "skipLibCheck": true,
+        "noImplicitOverride": true,
+        "forceConsistentCasingInFileNames": true,
+        "paths": {
+            "~/*": ["./*"]
+        },
+    },
+    "exclude": ["../../node_modules", "../../dist"]
 }

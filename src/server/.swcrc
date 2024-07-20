@@ -1,38 +1,26 @@
 {
-    "jsc": {
+  "jsc": {
       "parser": {
-        "syntax": "typescript",
-        "decorators": true
+          "syntax": "typescript",
+          "decorators": true
       },
       "transform": {
-        "decoratorMetadata": true,
-        "legacyDecorator": true
+          "decoratorMetadata": true,
+          "legacyDecorator": true
       },
-      "target": "es2021",
+      "target": "es2022",
       "loose": true,
       "baseUrl": ".",
       "paths": {
-        "~/*": [
-          "./src/*"
-        ],
-        "@/*": [
-          "./*"
-        ]
+          "~/*": ["."]
       }
-    },
-    "env": {
-      "targets": {
-        "node": "16"
-      }
-    },
-    "module": {
+  },
+  "module": {
       "type": "commonjs",
       "strict": false,
       "strictMode": true,
       "lazy": false,
       "noInterop": false
-    },
-    "sourceMaps": "inline"
-  }
-  
-  
+  },
+  "sourceMaps": "inline"
+}

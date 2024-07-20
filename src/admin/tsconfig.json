@@ -3,7 +3,7 @@
         "target": "ESNext",
         "useDefineForClassFields": true,
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "allowJs": false,
+        "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": false,
         "importHelpers": true,
@@ -14,21 +14,22 @@
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "noEmit": true,
+        "composite": true,
+        "outDir": "./dist",
         "jsx": "react-jsx",
         "incremental": true,
-        "baseUrl": "./",
+        "baseUrl": ".",
         "paths": {
             "~/*": ["./*"],
+            "@/*": ["../../*"]
         },
         "types": [
             "vite/client",
             "vitest/globals",
             "@testing-library/jest-dom/vitest",
             "jest-extended",
-            "vite-plugin-pages/client-react",
+            "vite-plugin-pages/client-react"
         ]
     },
-    "exclude": ["node_modules"],
-    "references": [{ "path": "../../src/server" }]
+    "references": [{ "path": "../server" }]
 }

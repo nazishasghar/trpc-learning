@@ -1,6 +1,12 @@
-import { createTRPCReact } from '@trpc/react-query'
-import type { baseRouter } from '../../server/baseRouter'
+import {
+    createTRPCReact,
+    type inferReactQueryProcedureOptions,
+  } from '@trpc/react-query';
+  import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
+import type { BaseRouter } from '@/src/server/baseRouter';
 
-type ClientRouter = typeof baseRouter
-
-export const trpc = createTRPCReact<ClientRouter>()
+export type ReactQueryOptions = inferReactQueryProcedureOptions<BaseRouter>;
+export type RouterInputs = inferRouterInputs<BaseRouter>;
+export type RouterOutputs = inferRouterOutputs<BaseRouter>;
+ 
+export const trpc = createTRPCReact<BaseRouter>();

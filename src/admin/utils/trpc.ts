@@ -3,7 +3,7 @@ import {
     type inferReactQueryProcedureOptions,
   } from '@trpc/react-query';
   import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
-import type { BaseRouter } from '../../server/baseRouter';
+import type { BaseRouter } from '@/src/server/baseRouter';
 
 export type ReactQueryOptions = inferReactQueryProcedureOptions<BaseRouter>;
 export type RouterInputs = inferRouterInputs<BaseRouter>;

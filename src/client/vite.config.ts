@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import pages from 'vite-plugin-pages'
-
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
 
 dotenv.config({ path: '../../config/.env' })
 
@@ -19,10 +18,11 @@ export default defineConfig({
     resolve: {
         alias: {
             '~': __dirname,
+            '@': "../../*"
         },
     },
     server: {
-        port: 3002,
+        port: 3001,
     },
     define: {
         'process.env.HTTP_BATCH_LINK': `'${process.env.HTTP_BATCH_LINK}'`,

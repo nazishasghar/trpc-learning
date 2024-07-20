@@ -1,9 +1,10 @@
 import { initTRPC } from '@trpc/server'
+import { Context } from '~/utils/context'
 /**
  * Initialization of tRPC backend
  * Should be done only once per backend!
  */
-export const t = initTRPC.create()
+export const t = initTRPC.context<Context>().create()
 /**
  * Export reusable router and procedure helpers
  * that can be used throughout the router
