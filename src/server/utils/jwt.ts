@@ -1,9 +1,6 @@
 import { TRPCError } from '@trpc/server'
 import jwt from 'jsonwebtoken'
-
-interface jwtPayLoad extends jwt.JwtPayload {
-    uuid: string
-}
+import { jwtPayLoad } from '~/types/jwtPayload'
 
 /**
  * Verifies a JSON Web Token (JWT) asynchronously.

@@ -280,6 +280,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-types
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,osx,emacs,vim,node
