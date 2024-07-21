@@ -13,7 +13,6 @@
         "baseUrl": ".",
         "resolveJsonModule": true,
         "moduleDetection": "auto",
-        "allowImportingTsExtensions": true,
         "esModuleInterop": true,
         "composite": true,
         "moduleResolution": "Node10",
