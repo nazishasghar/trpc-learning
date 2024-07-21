@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "CommonJS",
-        "lib": ["ESNext"],
+        "lib": ["ES2023", "ES2020.String"],
         "strict": true,
         "declaration": true,
         "removeComments": true,
@@ -12,9 +12,11 @@
         "outDir": "./dist",
         "baseUrl": ".",
         "resolveJsonModule": true,
+        "moduleDetection": "auto",
+        "allowImportingTsExtensions": true,
         "esModuleInterop": true,
         "composite": true,
-        "moduleResolution": "Node",
+        "moduleResolution": "Node10",
         "allowSyntheticDefaultImports": true,
         "incremental": true,
         "noImplicitAny": true,
@@ -23,7 +25,7 @@
         "forceConsistentCasingInFileNames": true,
         "paths": {
             "~/*": ["./*"]
-        },
+        }
     },
     "exclude": ["../../node_modules", "../../dist"]
 }

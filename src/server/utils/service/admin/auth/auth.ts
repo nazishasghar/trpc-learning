@@ -63,7 +63,7 @@ export const useAdminAuthService = () => {
             where: { token: refreshToken },
         })
 
-        if (!res?.user) throw new TRPCError({ code: 'NOT_FOUND', message: 'user not available' })
+        if (!res) throw new TRPCError({ code: 'NOT_FOUND', message: 'user not available' })
         return res.user
     }
 

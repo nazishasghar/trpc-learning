@@ -1,9 +1,9 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
-import * as dotenv from 'dotenv'
+import dotenv from 'dotenv'
 import { CustomNamingStrategy } from './custom-naming-strategy'
 
-import * as path from 'path'
+import path from 'path'
 const stage = process.env.STAGE || 'local'
 process.env.STAGE = stage
 

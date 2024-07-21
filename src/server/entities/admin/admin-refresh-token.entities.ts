@@ -1,6 +1,6 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 import type { Relation } from 'typeorm'
-import { BaseEntities } from '~/utils/base-entities/base'
+import { BaseEntities } from '../../utils/base-entities/base'
 import { Exclude } from 'class-transformer'
 import { Admin } from './admin.entities'
 

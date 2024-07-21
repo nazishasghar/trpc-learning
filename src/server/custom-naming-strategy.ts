@@ -1,4 +1,4 @@
-import * as pluralize from 'pluralize'
+import pluralize from 'pluralize'
 import { DefaultNamingStrategy, NamingStrategyInterface } from 'typeorm'
 import { snakeCase } from 'typeorm/util/StringUtils'
 

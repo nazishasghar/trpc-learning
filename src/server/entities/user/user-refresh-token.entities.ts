@@ -1,7 +1,7 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 import type { Relation } from 'typeorm'
-import { BaseEntities } from '~/utils/base-entities/base'
-import { User } from '~/entities/user/user.entities'
+import { BaseEntities } from '../../utils/base-entities/base'
+import { User } from './user.entities'
 import { Exclude } from 'class-transformer'
 
 @Entity()
