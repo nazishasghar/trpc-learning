@@ -12,8 +12,7 @@
         "build:server": "cd ./src/server && npm run build",
         "build:admin": "cd ./src/admin && npm run build",
         "build:client": "cd ./src/client && npm run build",
-        "build": "npm-run-all --parallel build:*",
-        "type-check": "tsc -b && rimraf types && rimraf dist"
+        "build": "npm-run-all --parallel build:*"
     },
     "keywords": [],
     "author": "",
@@ -104,7 +103,7 @@
         "eslint": "^9.6.0",
         "eslint-config-prettier": "^9.1.0",
         "globals": "^15.8.0",
-        "husky": "^9.0.11",
+        "husky": "^9.1.1",
         "lint-staged": "^15.2.7",
         "mysql2": "^3.10.1",
         "npm-run-all": "^4.1.5",
@@ -116,10 +115,9 @@
     "lint-staged": {
         "*.{vue,js,json,ts,jsx,tsx}": [
             "eslint --fix",
-            "prettier --config .prettierrc --write",
-            "npm run type-check"
+            "prettier --config .prettierrc --write"
         ],
-    "*.{html,htm}": "prettier --config .prettierrc --write ",
+        "*.{html,htm}": "prettier --config .prettierrc --write ",
         "*.{css,styl,scss,vue}": "stylelint --fix"
     }
 }

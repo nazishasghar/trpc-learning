@@ -18,7 +18,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '~': __dirname,
-            '@': "../../*"
+            '@': '../../*',
         },
     },
     server: {
@@ -27,4 +27,5 @@ export default defineConfig({
     define: {
         'process.env.HTTP_BATCH_LINK': `'${process.env.HTTP_BATCH_LINK}'`,
     },
+    cacheDir: '../../node_modules/.vite',
 })
