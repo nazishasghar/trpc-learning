@@ -2,17 +2,18 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "CommonJS",
-        "lib": ["ES2023", "ES2020.String"],
+        "lib": ["ES2023"],
         "strict": true,
         "declaration": true,
         "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "outDir": "./dist",
+        "outDir": "../../dist/server",
+        "emitDeclarationOnly": true,
+        "declarationDir": "../../types/server",
         "baseUrl": ".",
         "resolveJsonModule": true,
-        "moduleDetection": "auto",
         "esModuleInterop": true,
         "composite": true,
         "moduleResolution": "Node10",
@@ -26,5 +27,6 @@
             "~/*": ["./*"]
         }
     },
+    "include": ["../server/**/*.ts"],
     "exclude": ["../../node_modules", "../../dist"]
 }

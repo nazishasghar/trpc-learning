@@ -5,13 +5,15 @@
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "allowJs": true,
         "skipLibCheck": true,
-        "esModuleInterop": false,
+        "esModuleInterop": true,
         "importHelpers": true,
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "module": "ESNext",
-        "outDir": "./dist",
+        "outDir": "../../dist/client",
+        "declarationDir": "../../types/client",
+        "emitDeclarationOnly": true,
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
@@ -31,5 +33,7 @@
             "vite-plugin-pages/client-react"
         ]
     },
-    "references": [{ "path": "../server" }]
+    "references": [{ "path": "../server" }],
+    "include": ["../client/**/*.ts", "../client/**/*.tsx"],
+    "exclude": ["../../node_modules", "../../dist"]
 }

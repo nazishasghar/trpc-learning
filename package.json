@@ -13,7 +13,7 @@
         "build:admin": "cd ./src/admin && npm run build",
         "build:client": "cd ./src/client && npm run build",
         "build": "npm-run-all --parallel build:*",
-        "type-check": "tsc -b && rimraf types"
+        "type-check": "tsc -b && rimraf types && rimraf dist"
     },
     "keywords": [],
     "author": "",
@@ -53,6 +53,8 @@
         "cross-var": "^1.1.0",
         "dayjs": "^1.11.11",
         "dotenv": "^16.4.5",
+        "eslint-plugin-eslint-plugin": "^6.2.0",
+        "eslint-plugin-react": "^7.35.0",
         "fastify": "^4.28.0",
         "framer-motion": "^11.2.11",
         "i18next": "^23.11.5",
@@ -113,10 +115,11 @@
     },
     "lint-staged": {
         "*.{vue,js,json,ts,jsx,tsx}": [
-            "prettier --config .prettierrc --write ",
+            "eslint --fix",
+            "prettier --config .prettierrc --write",
             "npm run type-check"
         ],
-        "*.{html,htm}": "prettier --config .prettierrc --write ",
+    "*.{html,htm}": "prettier --config .prettierrc --write ",
         "*.{css,styl,scss,vue}": "stylelint --fix"
     }
 }

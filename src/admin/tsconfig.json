@@ -5,17 +5,19 @@
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "allowJs": true,
         "skipLibCheck": true,
-        "esModuleInterop": false,
+        "esModuleInterop": true,
         "importHelpers": true,
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "module": "ESNext",
+        "declarationDir": "../../types/admin",
+        "emitDeclarationOnly": true,
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "composite": true,
-        "outDir": "./dist",
+        "outDir": "../../dist/admin",
         "jsx": "react-jsx",
         "incremental": true,
         "baseUrl": ".",
@@ -31,5 +33,7 @@
             "vite-plugin-pages/client-react"
         ]
     },
-    "references": [{ "path": "../server" }]
+    "references": [{ "path": "../server" }],
+    "include": ["../admin/**/*.ts", "../admin/**/*.tsx"],
+    "exclude": ["../../node_modules", "../../dist"]
 }
