@@ -6,6 +6,7 @@
     "scripts": {
         "start": "nodemon",
         "build": "rimraf dist && npx swc ../server -d dist",
+        "cmd": "ts-node -r tsconfig-paths/register --transpile-only cmd.ts",
         "typeorm": "typeorm-ts-node-commonjs -d ./data-source.ts",
         "typeorm:create": "npm run typeorm migration:generate db/migrations/$npm_config_name",
         "typeorm:down": "npm run typeorm migration:revert",

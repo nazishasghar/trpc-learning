@@ -14,6 +14,7 @@ export abstract class BaseEntities {
     readonly deletedAt!: Date | null
 
     @CreateDateColumn({ type: 'datetime', precision: 0, default: () => 'CURRENT_TIMESTAMP' })
+    @Exclude()
     readonly createdAt!: Date
 
     @UpdateDateColumn({
@@ -22,5 +23,6 @@ export abstract class BaseEntities {
         default: () => 'CURRENT_TIMESTAMP',
         onUpdate: 'CURRENT_TIMESTAMP',
     })
+    @Exclude()
     readonly updatedAt!: Date
 }

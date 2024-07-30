@@ -1,6 +1,6 @@
 import reactPlugin from 'eslint-plugin-react'
 import eslintPlugin from 'eslint-plugin-eslint-plugin'
-
+import babelParser from '@babel/eslint-parser'
 export default [
     {
         files: ['src/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
@@ -8,7 +8,14 @@ export default [
         ...eslintPlugin.configs['flat/recommended'],
         ignores: ['**/*.config.js'],
         languageOptions: {
+            parser: babelParser,
             parserOptions: {
+                requireConfigFile: false,
+                babelOptions: {
+                    babelrc: false,
+                    configFile: false,
+                    presets: ['@babel/preset-env'],
+                },
                 ecmaFeatures: {
                     jsx: true,
                 },

@@ -1,4 +1,4 @@
-import { ChakraProvider, Flex, Text } from '@chakra-ui/react'
+import { ChakraProvider, Flex, Spinner, Text } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TRPCClientError, httpBatchLink } from '@trpc/client'
 import { Component, ErrorInfo, ReactNode, StrictMode, Suspense, useEffect, useMemo } from 'react'
@@ -7,7 +7,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
 import { trpc } from '~/utils/trpc'
 import routes from '~react-pages'
-import { useClientAuthState } from '~/utils/hooks/authState'
+import { useAdminAuthState } from '~/utils/hooks/authState'
 import { Meta } from './Meta'
 import { theme } from '~/utils/chakra-theme'
 import { GA4 } from './GA4'
@@ -16,7 +16,7 @@ export const PageShell = () => {
     const queryClient = useMemo(() => new QueryClient(), [])
     const navigate = useNavigate()
     const location = useLocation().pathname
-    const { authState } = useClientAuthState()
+    const { authState } = useAdminAuthState()
 
     const helmetContext = {}
     const trpcClient = useMemo(
@@ -34,8 +34,10 @@ export const PageShell = () => {
             }),
         [authState],
     )
+    
     useEffect(() => {
         if ((!authState || !authState.access_token) && location !== '/login') navigate('/login')
+        else navigate('/')
     }, [authState])
 
     return (
@@ -47,7 +49,13 @@ export const PageShell = () => {
                             <HelmetProvider context={helmetContext}>
                                 <GA4 trackingCode={process.env.GA4_ID!} isEnable={process.env.STAGE !== 'local'} />
                                 <Meta />
-                                <Suspense fallback={<p>Loading...</p>}>
+                                <Suspense
+                                    fallback={
+                                        <Flex h={'100vh'} justifyContent={'center'} alignItems={'center'}>
+                                            <Spinner />
+                                        </Flex>
+                                    }
+                                >
                                     {<ErrorBoundary>{useRoutes(routes)}</ErrorBoundary>}
                                 </Suspense>
                             </HelmetProvider>

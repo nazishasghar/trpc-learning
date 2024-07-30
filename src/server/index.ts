@@ -18,7 +18,6 @@ const logger = new Logger()
 const app = Fastify()
 
 const main = async () => {
-
     await app.register(cors)
 
     const isHTTPS = process.env.HTTPS === 'true'

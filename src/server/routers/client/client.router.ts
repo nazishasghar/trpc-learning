@@ -1,8 +1,8 @@
 import { router } from '~/trpc'
-import { userRouter } from './user/user.router'
-import { clientAuthRouter } from './auth/auth.router'
+import { clientAuthRouter } from '~/routers/client/auth/auth.router'
+import { clientFeedBackRouter } from '~/routers/client/feedback/feedback.router'
 
 export const clientRouter = router({
     auth: clientAuthRouter,
-    user: userRouter,
+    feedback: clientFeedBackRouter
 })

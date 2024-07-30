@@ -23,9 +23,12 @@ export default defineConfig({
     },
     server: {
         port: 3001,
+        fs: {
+            allow: ["../.."]
+        }
     },
     define: {
         'process.env.HTTP_BATCH_LINK': `'${process.env.HTTP_BATCH_LINK}'`,
     },
-    cacheDir: '../../node_modules/.vite',
+    cacheDir: '../../node_modules/admin/.vite',
 })

@@ -1,22 +1,22 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm'
 import type { Relation } from 'typeorm'
 import { BaseEntities } from '../../utils/base-entities/base'
+import { EmployeeEntities } from './employee.entities'
 import { Exclude } from 'class-transformer'
-import { AdminEntities } from './admin.entities'
 import { OmitAndPickPartial } from '~/types/common'
 
 @Entity()
 @Exclude()
-export class AdminRefreshTokenEntities extends BaseEntities {
+export class EmployeeRefreshTokenEntities extends BaseEntities {
     @Column({ type: 'varchar', length: 63 })
     @Index()
     token!: string
 
-    @ManyToOne(() => AdminEntities)
+    @ManyToOne(() => EmployeeEntities)
     @JoinColumn()
-    user?: Relation<AdminEntities>
+    employee?: Relation<EmployeeEntities>
 
-    constructor(partial: OmitAndPickPartial<AdminRefreshTokenEntities, keyof Omit<BaseEntities, 'uuid'>, never>) {
+    constructor(partial: OmitAndPickPartial<EmployeeRefreshTokenEntities, keyof Omit<BaseEntities, 'uuid'>, never>) {
         super()
         Object.assign(this, partial)
     }

@@ -15,7 +15,7 @@ const initialValue: AuthState = {
 
 const authAtom = atomWithStorage<AuthState | undefined>('access_token', initialValue)
 
-export const useClientAuthState = () => {
+export const useAdminAuthState = () => {
 
     const [authState, setAuthState] = useAtom(authAtom)
 

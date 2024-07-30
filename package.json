@@ -21,6 +21,7 @@
     "dependencies": {
         "@babel/cli": "^7.24.7",
         "@babel/core": "^7.24.7",
+        "@babel/eslint-parser": "^7.24.8",
         "@chakra-ui/cli": "^2.4.1",
         "@chakra-ui/react": "^2.8.2",
         "@emotion/react": "^11.11.4",
@@ -28,6 +29,7 @@
         "@fastify/cors": "^9.0.1",
         "@fastify/helmet": "^11.1.1",
         "@fastify/multipart": "^8.3.0",
+        "@hookform/resolvers": "^3.9.0",
         "@storybook/react": "^8.1.10",
         "@swc-node/register": "^1.10.2",
         "@swc/cli": "^0.4.0",
@@ -70,6 +72,7 @@
         "react-helmet-async": "^2.0.5",
         "react-hook-form": "^7.52.1",
         "react-i18next": "^14.1.2",
+        "react-icons": "^5.2.1",
         "react-is": "^18.3.1",
         "react-quill": "^2.0.0",
         "react-router": "^6.23.1",
