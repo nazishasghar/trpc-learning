@@ -11,12 +11,23 @@ import { useClientAuthState } from '~/utils/hooks/authState'
 import { Meta } from './Meta'
 import { theme } from '~/utils/chakra-theme'
 import { GA4 } from './GA4'
+import { CombinedDataTransformer } from '@trpc/server'
+import SuperJSON from 'superjson'
 
 export const PageShell = () => {
     const queryClient = useMemo(() => new QueryClient(), [])
     const navigate = useNavigate()
     const location = useLocation().pathname
     const { authState } = useClientAuthState()
+
+    const transformer: CombinedDataTransformer = {
+        input: SuperJSON,
+        output: {
+            serialize: (object) => object,
+            // This `eval` only ever happens on the **client**
+            deserialize: (object) => eval(object),
+        },
+    }
 
     const helmetContext = {}
     const trpcClient = useMemo(
@@ -29,6 +40,7 @@ export const PageShell = () => {
                             authState.access_token && {
                                 headers: { authorization: 'Bearer ' + authState.access_token },
                             }),
+                        transformer,
                     }),
                 ],
             }),

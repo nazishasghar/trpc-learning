@@ -11,8 +11,6 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "module": "ESNext",
-        "declarationDir": "../../types/admin",
-        "emitDeclarationOnly": true,
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,

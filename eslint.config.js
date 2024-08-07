@@ -8,7 +8,7 @@ export default [
         ...tseslint.config,
         ...reactRecommended,
         files: ['src/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-        ignores: ['**/*/config.js'],
+        ignores: ['**/*/config.js', '**/*.json'],
         settings: {
             version: 'detect',
         },

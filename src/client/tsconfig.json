@@ -12,8 +12,6 @@
         "forceConsistentCasingInFileNames": true,
         "module": "ESNext",
         "outDir": "../../dist/client",
-        "declarationDir": "../../types/client",
-        "emitDeclarationOnly": true,
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,

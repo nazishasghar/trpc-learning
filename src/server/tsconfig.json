@@ -10,8 +10,6 @@
         "experimentalDecorators": true,
         "sourceMap": true,
         "outDir": "../../dist/server",
-        "emitDeclarationOnly": true,
-        "declarationDir": "../../types/server",
         "baseUrl": ".",
         "resolveJsonModule": true,
         "esModuleInterop": true,
