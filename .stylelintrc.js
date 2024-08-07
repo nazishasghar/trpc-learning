@@ -15,6 +15,5 @@ export default {
         'declaration-property-value-no-unknown': true,
         'no-unknown-animations': true,
         'no-unknown-custom-media': true,
-        'no-unknown-custom-properties': true,
     },
 }
