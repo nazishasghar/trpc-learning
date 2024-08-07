@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server'
 import {
+    AdminGetResponseSchema,
     LoginRequestSchema,
     LoginResponseSchema,
     RefreshRequestSchema,
@@ -135,5 +136,20 @@ export const useAdminAuthService = () => {
         }
     })
 
-    return { signin, refreshToToken }
+    /**
+     * Fetches and returns the information of an admin based on the provided admin ID.
+     *
+     * @async
+     * @function
+     * @param {Object} opts - The options object containing the input parameters.
+     * @param {AdminGetRequestSchema} opts.input - The request schema containing the admin ID.
+     * @returns {Promise<AdminGetResponseSchema>} The response schema containing the admin information.
+     * @throws {TRPCError} If the admin does not exist with the provided UUID.
+     */
+    const getAdminInfo = procedureFunction<unknown, AdminGetResponseSchema>(async (opts) => {
+        if (!opts.ctx.user) throw new TRPCError({ code: 'NOT_FOUND', message: 'admin does not exist with the token' })
+        return opts.ctx.user
+    })
+
+    return { signin, refreshToToken, getAdminInfo }
 }

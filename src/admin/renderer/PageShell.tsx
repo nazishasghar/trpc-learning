@@ -1,42 +1,28 @@
 import { ChakraProvider, Flex, Spinner, Text } from '@chakra-ui/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { TRPCClientError, httpBatchLink } from '@trpc/client'
-import { Component, ErrorInfo, ReactNode, StrictMode, Suspense, useEffect, useMemo } from 'react'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { TRPCClientError } from '@trpc/client'
+import { Component, ErrorInfo, ReactNode, StrictMode, Suspense, useEffect } from 'react'
 import { Provider as JotaiProvider } from 'jotai'
 import { HelmetProvider } from 'react-helmet-async'
-import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
-import { trpc } from '~/utils/trpc'
+import { useNavigate, useRoutes } from 'react-router-dom'
+import { useTrpc } from '~/utils/trpc'
 import routes from '~react-pages'
-import { useAdminAuthState } from '~/utils/hooks/authState'
 import { Meta } from './Meta'
 import { theme } from '~/utils/chakra-theme'
 import { GA4 } from './GA4'
+import { useAdminAuthState } from '~/utils/hooks/use-auth-state'
+import { CDialog } from '~/components/common/cDialog/CDialog'
 
 export const PageShell = () => {
-    const queryClient = useMemo(() => new QueryClient(), [])
     const navigate = useNavigate()
-    const location = useLocation().pathname
+
     const { authState } = useAdminAuthState()
 
+    const { trpc, trpcClient, queryClient } = useTrpc()
     const helmetContext = {}
-    const trpcClient = useMemo(
-        () =>
-            trpc.createClient({
-                links: [
-                    httpBatchLink({
-                        url: process.env.HTTP_BATCH_LINK as string,
-                        ...(authState &&
-                            authState.access_token && {
-                                headers: { authorization: 'Bearer ' + authState.access_token },
-                            }),
-                    }),
-                ],
-            }),
-        [authState],
-    )
-    
+
     useEffect(() => {
-        if ((!authState || !authState.access_token) && location !== '/login') navigate('/login')
+        if (!authState || !authState.access_token) navigate('/login')
         else navigate('/')
     }, [authState])
 
@@ -51,12 +37,17 @@ export const PageShell = () => {
                                 <Meta />
                                 <Suspense
                                     fallback={
-                                        <Flex h={'100vh'} justifyContent={'center'} alignItems={'center'}>
+                                        <Flex h={'100vh'} justifyContent={'center'} alignItems={'center'} w={'full'}>
                                             <Spinner />
                                         </Flex>
                                     }
                                 >
-                                    {<ErrorBoundary>{useRoutes(routes)}</ErrorBoundary>}
+                                    {
+                                        <ErrorBoundary>
+                                            <CDialog />
+                                            {useRoutes(routes)}
+                                        </ErrorBoundary>
+                                    }
                                 </Suspense>
                             </HelmetProvider>
                         </ChakraProvider>
@@ -101,7 +92,6 @@ class ErrorBoundary extends Component<Props, State> {
             )
         }
 
-        // eslint-disable-next-line react/destructuring-assignment
         return this.props.children
     }
 }

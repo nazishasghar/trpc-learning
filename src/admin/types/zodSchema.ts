@@ -5,3 +5,11 @@ export const loginSchema = z.object({
 })
 
 export type LoginSchema = z.infer<typeof loginSchema>
+
+export const createFeedbackSchema = z.object({
+    createdAt: z.string().min(1, 'This is a required field'),
+    comments: z.string().min(1, 'This is a required field'),
+    points: z.string().min(1, 'This is a required field'),
+})
+
+export type CreateFeedbackSchema = z.infer<typeof createFeedbackSchema>

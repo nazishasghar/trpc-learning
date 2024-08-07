@@ -1,11 +1,11 @@
-import { act, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { createQueryWrapper } from '~/test/utils/create-query-wrapper'
 
-import { CButton } from './CButton'
+import { CDialog } from './CDialog'
 
-describe('CButton', () => {
+describe('CDialog', () => {
     // Create stub
     const { queryClient, queryWrapper } = createQueryWrapper()
     // Set a constant values to initialize react-query
@@ -19,11 +19,9 @@ describe('CButton', () => {
     describe('logic', () => {
         test('ADD_YOUR_TESTS', async () => {
             // Arrange
-            // const rendered = renderHook(() => useCButton(), { wrapper: queryWrapper }).result
-
-            // Act
-            await act(async () => {})
-
+            // const rendered = renderHook(() => useCDialog(), { wrapper: queryWrapper }).result
+            // // Act
+            // await act(async () => {})
             // Assert
         })
     })
@@ -31,8 +29,8 @@ describe('CButton', () => {
     describe('view', () => {
         test('should be rendered', async () => {
             // Arrange
-            const { getByTestId } = render(<CButton />, { wrapper: queryWrapper })
-            const element = getByTestId('c-button')
+            const { getByTestId } = render(<CDialog />, { wrapper: queryWrapper })
+            const element = getByTestId('c-dialog')
 
             // Assert
             expect(element).toBeInTheDocument()
@@ -40,10 +38,8 @@ describe('CButton', () => {
 
         test('ADD_YOUR_TESTS', async () => {
             // Arrange
-
             // Act
-            await act(async () => {})
-
+            // await act(async () => {})
             // Assert
         })
     })

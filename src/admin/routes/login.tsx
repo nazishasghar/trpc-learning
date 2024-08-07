@@ -14,20 +14,22 @@ import {
     chakra,
     Link,
 } from '@chakra-ui/react'
-import { useEffect, useState, type FC } from 'react'
+import { useState, type FC } from 'react'
 import { FaUserAlt, FaLock } from 'react-icons/fa'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { loginSchema, LoginSchema } from '~/types/zodSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { trpc } from '~/utils/trpc'
+import { useTrpc } from '~/utils/trpc'
 import { useNavigate } from 'react-router'
-import { useAdminAuthState } from '~/utils/hooks/authState'
+import { useAdminAuthState } from '~/utils/hooks/use-auth-state'
 import { DefaultLayout } from '~/layout/default'
 
 // logic
 const useLoginPage = () => {
     const CFaUserAlt = chakra(FaUserAlt)
     const CFaLock = chakra(FaLock)
+
+    const { trpc } = useTrpc()
 
     const {
         register,
@@ -37,14 +39,14 @@ const useLoginPage = () => {
 
     const loginMutation = trpc.admin.auth.signin.useMutation()
 
-    const { setAuth, authState } = useAdminAuthState()
+    const { setAuthState, setMe } = useAdminAuthState()
 
     const navigate = useNavigate()
 
-    const onSubmit: SubmitHandler<LoginSchema> = (data) => {
-        return loginMutation.mutate(data, {
-            onSuccess: (data) => {
-                setAuth({ ...data, expires_in: String(data.expires_in) })
+    const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
+        return await loginMutation.mutateAsync(data, {
+            onSuccess: (res) => {
+                setAuthState({ ...res, expires_in: String(res.expires_in) })
                 navigate('/')
             },
         })
@@ -68,9 +70,9 @@ const LoginPageView: FC<ReturnType<typeof useLoginPage>> = () => {
                 flexDirection="column"
                 width="100wh"
                 height="100vh"
-                backgroundColor="gray.200"
                 justifyContent="center"
                 alignItems="center"
+                pointerEvents={'all'}
             >
                 <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
                     <Avatar bg="teal.500" />

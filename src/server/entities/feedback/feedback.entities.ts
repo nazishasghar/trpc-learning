@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, Relation } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm'
 import { BaseEntities } from '../../utils/base-entities/base'
 import { EmployeeEntities } from '../employee/employee.entities'
 import { AdminEntities } from '../admin/admin.entities'
@@ -6,7 +6,7 @@ import { OmitAndPickPartial } from '~/types/common'
 
 @Entity()
 export class FeedBackEntities extends BaseEntities {
-    @OneToOne(() => AdminEntities)
+    @ManyToOne(() => AdminEntities)
     @JoinColumn()
     feedBackBy!: Relation<AdminEntities>
 
@@ -16,11 +16,11 @@ export class FeedBackEntities extends BaseEntities {
     @ManyToOne(() => EmployeeEntities)
     employee!: Relation<EmployeeEntities>
 
-    @Column({ type: 'varchar', length: 200 })
+    @Column({ type: 'text' })
     comments!: string
 
     @Column({ type: 'datetime', precision: 0 })
-    feedBackDate!: Date
+    feedBackDate!: string
 
     constructor(partial: OmitAndPickPartial<FeedBackEntities, keyof Omit<BaseEntities, 'uuid'>, never>) {
         super()

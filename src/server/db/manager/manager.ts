@@ -1,3 +1,3 @@
 import { AppDataSource } from '~/data-source'
 
-export const manager = AppDataSource.manager
+export const { manager } = AppDataSource

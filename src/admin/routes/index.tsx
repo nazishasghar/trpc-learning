@@ -1,15 +1,29 @@
-import { Box, Button } from '@chakra-ui/react'
-import { useEffect, useState, type FC } from 'react'
+import { Flex } from '@chakra-ui/react'
+import { useEffect, useMemo, type FC } from 'react'
 import { DefaultLayout } from '~/layout/default'
-import { RouterInputs, RouterOutputs, trpc } from '~/utils/trpc'
+import { useTrpc } from '~/utils/trpc'
+import Spline from '@splinetool/react-spline'
+import { CEmployeeRow } from '~/components/common/cEmployeeRow/CEmployeeRow'
+import { useAdminAuthState } from '~/utils/hooks/use-auth-state'
 
 // logic
 const useIndexPage = () => {
-    const [employeeList, setEmployeeList] = useState<RouterOutputs['admin']['employee']['list']['employeeList']>()
-    const employeeListMutation = trpc.admin.employee.list.useMutation()
+    const { trpc } = useTrpc()
+
+    const { setMe } = useAdminAuthState()
+
+    const { data: employees } = trpc.admin.employee.list.useQuery({})
+
+    const { data: admin } = trpc.admin.auth.getMe.useQuery(undefined)
+
     useEffect(() => {
-        employeeListMutation.mutate({}, { onSuccess: (data) => setEmployeeList(data.employeeList) })
-    }, [])
+        setMe(admin)
+    }, [admin])
+
+    const employeeList = useMemo(
+        () => employees?.[0].map((i) => <CEmployeeRow key={i.uuid} employee={i} />),
+        [employees],
+    )
     return { employeeList }
 }
 
@@ -18,9 +32,14 @@ const IndexPageView: FC<ReturnType<typeof useIndexPage>> = (props) => {
     const { employeeList } = props
     return (
         <DefaultLayout>
-            {employeeList?.map((i) => {
-                return <Box key={i.uuid}>{i.name}</Box>
-            })}
+            <Flex position={'relative'} w={'full'}>
+                <Flex gap={'0.5rem'} direction={'column'} px={'5rem'} zIndex={1} w={'full'}>
+                    {employeeList}
+                </Flex>
+                <Flex pos={'fixed'} w={'full'} h={'full'} top={'-10'} left={'-2%'}>
+                    <Spline scene="https://prod.spline.design/V05N0PsDPyZ1kAEm/scene.splinecode" />
+                </Flex>
+            </Flex>
         </DefaultLayout>
     )
 }

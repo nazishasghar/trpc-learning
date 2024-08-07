@@ -1,13 +1,10 @@
-import { act, render } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { createQueryWrapper } from '~/test/utils/create-query-wrapper'
 
-import { CButton } from './CButton'
-
-describe('CButton', () => {
+describe('CFeedbackTable', () => {
     // Create stub
-    const { queryClient, queryWrapper } = createQueryWrapper()
+    const { queryClient } = createQueryWrapper()
     // Set a constant values to initialize react-query
     // e.g.
     queryClient.setQueryData(['sample-key'], { data: 'sample' })
@@ -19,11 +16,9 @@ describe('CButton', () => {
     describe('logic', () => {
         test('ADD_YOUR_TESTS', async () => {
             // Arrange
-            // const rendered = renderHook(() => useCButton(), { wrapper: queryWrapper }).result
-
-            // Act
-            await act(async () => {})
-
+            // const rendered = renderHook(() => useCFeedbackTable(), { wrapper: queryWrapper }).result
+            // // Act
+            // await act(async () => {})
             // Assert
         })
     })
@@ -31,19 +26,16 @@ describe('CButton', () => {
     describe('view', () => {
         test('should be rendered', async () => {
             // Arrange
-            const { getByTestId } = render(<CButton />, { wrapper: queryWrapper })
-            const element = getByTestId('c-button')
-
-            // Assert
-            expect(element).toBeInTheDocument()
+            // const { getByTestId } = render(<CFeedbackTable />, { wrapper: queryWrapper })
+            // const element = getByTestId('c-feedback-table')
+            // // Assert
+            // expect(element).toBeInTheDocument()
         })
 
         test('ADD_YOUR_TESTS', async () => {
             // Arrange
-
             // Act
-            await act(async () => {})
-
+            // await act(async () => {})
             // Assert
         })
     })

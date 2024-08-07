@@ -1,6 +1,6 @@
 import { publicProcedure, router } from '~/trpc'
-import { adminRouter } from './routers/admin/admin.router'
-import { clientRouter } from './routers/client/client.router'
+import { adminRouter } from '~/routers/admin/admin.router'
+import { clientRouter } from '~/routers/client/client.router'
 
 export const baseRouter = router({
     health: publicProcedure.query(() => 'healthy'),

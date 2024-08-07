@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 
 import { PageShell } from '~/renderer/PageShell'
+import '~/styles/global.css'
 
 export const Root: FC = () => {
     return (

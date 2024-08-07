@@ -27,15 +27,12 @@ export const useClientFeedBackService = () => {
         async (opts) => {
             const { take, skip } = calcPager(opts.input.limit, opts.input.page)
 
-            const feedBackList = await manager.find(FeedBackEntities, {
+            return await manager.findAndCount(FeedBackEntities, {
                 where: { employee: { uuid: opts.input.employeeId } },
                 take,
                 skip,
                 relations: { feedBackBy: true },
             })
-            return {
-                feedBackList,
-            }
         },
     )
 

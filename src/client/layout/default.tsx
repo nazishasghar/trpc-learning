@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import { Flex } from '@chakra-ui/react'
 import { GHeader } from '~/components/global/gHeader/GHeader'
 import { useClientAuthState } from '~/utils/hooks/authState'
@@ -8,7 +8,7 @@ export type DefaultLayoutProps = {
 }
 
 // logic
-export const useDefaultLayout = (props: DefaultLayoutProps) => {
+export const useDefaultLayout = () => {
     const { authState } = useClientAuthState()
     return { authState }
 }
@@ -27,6 +27,6 @@ export const DefaultLayoutView: FC<DefaultLayoutProps & ReturnType<typeof useDef
 
 // component
 export const DefaultLayout: FC<DefaultLayoutProps> = (props: DefaultLayoutProps) => {
-    const hookItems = useDefaultLayout(props)
+    const hookItems = useDefaultLayout()
     return <DefaultLayoutView {...props} {...hookItems} />
 }

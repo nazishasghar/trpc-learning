@@ -9,7 +9,7 @@ export type GHeaderProps = {
 }
 
 // logic
-export const useGHeader = (props: GHeaderProps) => {
+export const useGHeader = () => {
     const { authState, setAuth, removeAuth } = useClientAuthState()
 
     const { data: authData, isError } = trpc.client.auth.refresh.useQuery(
@@ -31,9 +31,7 @@ export const useGHeader = (props: GHeaderProps) => {
 }
 
 // view
-export const GHeaderView: FC<GHeaderProps & ReturnType<typeof useGHeader>> = (props) => {
-    const { children } = props
-
+export const GHeaderView: FC<GHeaderProps & ReturnType<typeof useGHeader>> = () => {
     return (
         <Flex data-testid="g-header" bgColor={'black'} justify={'start'} h={'2rem'}>
             <Text fontSize={'large'} color={'white'}>
@@ -45,6 +43,6 @@ export const GHeaderView: FC<GHeaderProps & ReturnType<typeof useGHeader>> = (pr
 
 // component
 export const GHeader: FC<GHeaderProps> = (props: GHeaderProps) => {
-    const hookItems = useGHeader(props)
+    const hookItems = useGHeader()
     return <GHeaderView {...props} {...hookItems} />
 }
