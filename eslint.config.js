@@ -23,11 +23,6 @@ export default [
             },
         },
         plugins: { '@typescript-eslint': typescriptPlugin, react: reactPlugin },
-        settings: {
-            react: {
-                version: 'detect',
-            },
-        },
         rules: {
             'no-duplicate-imports': 2,
             'no-unreachable-loop': 2,
