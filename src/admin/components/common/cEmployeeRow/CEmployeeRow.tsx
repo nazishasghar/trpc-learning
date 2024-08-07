@@ -14,7 +14,7 @@ export const useCEmployeeRow = (props: CEmployeeRowProps) => {
     const navigate = useNavigate()
 
     const onFeedbackClick = () => {
-        navigate(`/feedback/${employee.uuid}`)
+        navigate(`/employee/${employee.uuid}`)
     }
     return { onFeedbackClick }
 }

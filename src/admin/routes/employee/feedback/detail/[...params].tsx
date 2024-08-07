@@ -79,7 +79,7 @@ const useFeedbackDetailUuidPage = () => {
                     },
                     {
                         onSuccess: () => {
-                            navigate(`/feedback/${employeeId}`)
+                            navigate(`/employee/${employeeId}`)
                         },
                     },
                 ),

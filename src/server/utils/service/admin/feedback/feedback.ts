@@ -92,19 +92,14 @@ export const useAdminFeedBackService = () => {
      * @returns {Promise<DeleteResult>} A promise that resolves to the result of the deletion.
      */
     const deleteFeedBack = procedureFunction<DeleteFeedBackSchema>(async (opts) => {
-        const employee = await manager.findOne(EmployeeEntities, {
-            where: { uuid: opts.input.employeeId },
-            relations: { leader: true },
-        })
-        if (!employee) throw new TRPCError({ code: 'NOT_FOUND', message: 'employee did not exist' })
-
         const feedBack = await manager.findOne(FeedBackEntities, {
             where: { uuid: opts.input.feedBackId },
+            relations: { feedBackBy: true },
         })
 
         if (!feedBack) throw new TRPCError({ code: 'NOT_FOUND', message: 'FeedBack not found' })
 
-        if (!isFeedBackAccess(employee, opts.ctx.user as AdminEntities))
+        if (feedBack.feedBackBy.uuid !== (opts.ctx.user as AdminEntities).uuid)
             throw new TRPCError({ code: 'BAD_REQUEST', message: 'The user is not authorized to edit this FeedBack' })
 
         return await manager.softDelete(FeedBackEntities, { uuid: feedBack.uuid })

@@ -85,7 +85,9 @@ export const CFeedbackTableView: FC<CFeedbackTableProps & ReturnType<typeof useC
                                 <Td>
                                     <Text
                                         _hover={{ textDecor: 'underline', cursor: 'pointer' }}
-                                        onClick={() => navigate(`/feedback/detail/${i.uuid}/${employee?.uuid}`)}
+                                        onClick={() =>
+                                            navigate(`/employee/feedback/detail/${i.uuid}/${employee?.uuid}`)
+                                        }
                                         isTruncated
                                         maxW={'15rem'}
                                     >
