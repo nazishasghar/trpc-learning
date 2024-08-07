@@ -10,9 +10,7 @@ const useLoginPage = () => {
 }
 
 // view
-const LoginPageView: FC<ReturnType<typeof useLoginPage>> = (props) => {
-    const {} = props
-
+const LoginPageView: FC<ReturnType<typeof useLoginPage>> = () => {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const { authState, setAuth } = useClientAuthState()
