@@ -39,7 +39,7 @@ const useLoginPage = () => {
 
     const loginMutation = trpc.admin.auth.signin.useMutation()
 
-    const { setAuthState, setMe } = useAdminAuthState()
+    const { setAuthState } = useAdminAuthState()
 
     const navigate = useNavigate()
 
