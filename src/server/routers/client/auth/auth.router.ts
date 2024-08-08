@@ -45,7 +45,7 @@ export const clientAuthRouter = router({
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/api/client.auth.refresh',
+                path: '/api/client.auth.refresh/{refresh_token}',
                 description: 'A procedure route to get refresh token',
                 tags: ['ClientAuthRouter'],
                 protect: true,

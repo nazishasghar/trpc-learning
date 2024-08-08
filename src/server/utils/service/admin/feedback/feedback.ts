@@ -14,6 +14,7 @@ import { manager } from '~/db/manager/manager'
 import { EmployeeEntities } from '~/entities/employee/employee.entities'
 import { FeedBackEntities } from '~/entities/feedback/feedback.entities'
 import { AdminEntities } from '~/entities/admin/admin.entities'
+import dayjs from 'dayjs'
 
 const { procedureFunction, calcPager } = useUtilityFunction()
 
@@ -54,7 +55,7 @@ export const useAdminFeedBackService = () => {
             points: opts.input.points,
             comments: opts.input.comments,
             feedBackBy: opts.ctx.user as AdminEntities,
-            feedBackDate: opts.input.feedBackDate,
+            feedBackDate: dayjs(opts.input.feedBackDate).format('YYYY-MM-DDTHH:mm:ss'),
         })
         return await manager.save(feedBack)
     })
@@ -128,6 +129,7 @@ export const useAdminFeedBackService = () => {
         return await manager.findAndCount(FeedBackEntities, {
             where: { employee: { uuid: employee.uuid } },
             relations: { feedBackBy: true },
+            order: { feedBackDate: 'ASC' },
             skip,
             take,
         })

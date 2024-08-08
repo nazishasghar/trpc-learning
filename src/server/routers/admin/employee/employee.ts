@@ -46,7 +46,7 @@ export const adminEmployeeRouter = t.router({
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/api/admin.employee.getEmployee',
+                path: '/api/admin.employee.getEmployee/{employeeId}',
                 description: 'A procedure route to get employee',
                 tags: ['AdminEmployeeRouter'],
                 protect: true,

@@ -100,7 +100,7 @@ export const adminfeedBackRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/admin.feedback.employeeFeedbackList',
+                path: '/api/admin.feedback.employeeFeedbackList/{employeeId}',
                 description: 'A procedure route to employee feedback list',
                 tags: ['AdminFeedbackRouter'],
                 protect: true,
@@ -124,7 +124,7 @@ export const adminfeedBackRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/admin.feedback.getFeedbackWithUuid',
+                path: '/api/admin.feedback.getFeedbackWithUuid/{feedbackId}',
                 description: 'A procedure route to feedback with uuid',
                 tags: ['AdminFeedbackRouter'],
                 protect: true,
