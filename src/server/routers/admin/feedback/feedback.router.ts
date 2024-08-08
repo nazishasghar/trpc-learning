@@ -1,3 +1,4 @@
+import { z } from 'zod'
 import {
     createFeedBackSchema,
     deleteFeedBackSchema,
@@ -22,7 +23,19 @@ export const adminfeedBackRouter = router({
      * @input {CreateFeedBackSchema} - The request schema for creating feedback.
      * @mutation {Function} createFeedBack - The mutation function to create feedback.
      */
-    create: privateProcedure.input(createFeedBackSchema).mutation(createFeedBack),
+    create: privateProcedure
+        .meta({
+            openapi: {
+                method: 'POST',
+                path: '/api/admin.feedback.create',
+                description: 'A procedure route to create feedback',
+                tags: ['AdminFeedbackRouter'],
+                protect: true,
+            },
+        })
+        .input(createFeedBackSchema)
+        .output(feedbackGetResponseSchema)
+        .mutation(createFeedBack),
 
     /**
      * Edits feedback based on the provided request schema.
@@ -32,7 +45,19 @@ export const adminfeedBackRouter = router({
      * @input {EditFeedBackSchema} - The request schema for editing feedback.
      * @mutation {Function} editFeedBack - The mutation function to edit feedback.
      */
-    edit: privateProcedure.input(editFeedBackSchema).mutation(editFeedBack),
+    edit: privateProcedure
+        .meta({
+            openapi: {
+                method: 'POST',
+                path: '/api/admin.feedback.edit',
+                description: 'A procedure route to edit feedback',
+                tags: ['AdminFeedbackRouter'],
+                protect: true,
+            },
+        })
+        .input(editFeedBackSchema)
+        .output(feedbackGetResponseSchema)
+        .mutation(editFeedBack),
 
     /**
      * Deletes feedback based on the provided request schema.
@@ -42,7 +67,19 @@ export const adminfeedBackRouter = router({
      * @input {DeleteFeedBackSchema} - The request schema for deleting feedback.
      * @mutation {Function} deleteFeedBack - The mutation function to delete feedback.
      */
-    delete: privateProcedure.input(deleteFeedBackSchema).mutation(deleteFeedBack),
+    delete: privateProcedure
+        .meta({
+            openapi: {
+                method: 'POST',
+                path: '/api/admin.feedback.delete',
+                description: 'A procedure route to delete feedback',
+                tags: ['AdminFeedbackRouter'],
+                protect: true,
+            },
+        })
+        .input(deleteFeedBackSchema)
+        .output(z.void())
+        .mutation(deleteFeedBack),
 
     /**
      * Procedure to retrieve a list of feedback entries for a specific employee.
@@ -60,6 +97,15 @@ export const adminfeedBackRouter = router({
      * @throws {TRPCError} - Throws an error if the specified employee does not exist.
      */
     employeeFeedbackList: privateProcedure
+        .meta({
+            openapi: {
+                method: 'POST',
+                path: '/api/admin.feedback.employeeFeedbackList',
+                description: 'A procedure route to employee feedback list',
+                tags: ['AdminFeedbackRouter'],
+                protect: true,
+            },
+        })
         .input(employeeFeedBackListRequestSchema)
         .output(employeeFeedBackListResponseSchema)
         .query(getEmployeeFeedBackList),
@@ -75,6 +121,15 @@ export const adminfeedBackRouter = router({
      * @throws {TRPCError} If the employee or feedback is not found.
      */
     getFeedbackWithUuid: privateProcedure
+        .meta({
+            openapi: {
+                method: 'POST',
+                path: '/api/admin.feedback.getFeedbackWithUuid',
+                description: 'A procedure route to feedback with uuid',
+                tags: ['AdminFeedbackRouter'],
+                protect: true,
+            },
+        })
         .input(feedbackGetRequestSchema)
         .output(feedbackGetResponseSchema)
         .query(getFeedbackWithUuid),

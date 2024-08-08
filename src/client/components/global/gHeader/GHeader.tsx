@@ -1,7 +1,7 @@
 import { useEffect, type FC, type ReactNode } from 'react'
-import { useClientAuthState } from '~/utils/hooks/authState'
+import { useClientAuthState } from '~/utils/hooks/use-auth-state'
 import dayjs from 'dayjs'
-import { trpc } from '~/utils/trpc'
+import { useTrpc } from '~/utils/trpc'
 import { Flex, Text } from '@chakra-ui/react'
 
 export type GHeaderProps = {
@@ -10,7 +10,9 @@ export type GHeaderProps = {
 
 // logic
 export const useGHeader = () => {
-    const { authState, setAuth, removeAuth } = useClientAuthState()
+    const { authState, setAuthState, removeAuth } = useClientAuthState()
+
+    const { trpc } = useTrpc()
 
     const { data: authData, isError } = trpc.client.auth.refresh.useQuery(
         { refresh_token: authState?.refresh_token ?? '' },
@@ -19,7 +21,11 @@ export const useGHeader = () => {
 
     useEffect(() => {
         if (authData && authState && authState.refresh_token)
-            setAuth({ ...authData, refresh_token: authState?.refresh_token, expires_in: String(authData.expires_in) })
+            setAuthState({
+                ...authData,
+                refresh_token: authState?.refresh_token,
+                expires_in: String(authData.expires_in),
+            })
         if (isError) {
             removeAuth()
             window.location.href = '/login'

@@ -1,6 +1,7 @@
 import { CombinedDataTransformer, initTRPC, TRPCError } from '@trpc/server'
 import { Context } from '~/utils/context'
 import { decodeAndVerifyJwtToken } from '~/utils/decodeAndVerifyJwt'
+import { OpenApiMeta } from 'trpc-openapi'
 
 // https://github.com/blitz-js/superjson/issues/268
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -25,7 +26,7 @@ export const transformer: CombinedDataTransformer = {
  * Initialization of tRPC backend
  * Should be done only once per backend!
  */
-export const t = initTRPC.context<Context>().create({ transformer })
+export const t = initTRPC.meta<OpenApiMeta>().context<Context>().create({ transformer })
 /**
  * Export reusable router and procedure helpers
  * that can be used throughout the router

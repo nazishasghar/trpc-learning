@@ -1,53 +1,27 @@
-import { ChakraProvider, Flex, Text } from '@chakra-ui/react'
+import { ChakraProvider, Flex, Spinner, Text } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { TRPCClientError, httpBatchLink } from '@trpc/client'
+import { TRPCClientError } from '@trpc/client'
 import { Component, ErrorInfo, ReactNode, StrictMode, Suspense, useEffect, useMemo } from 'react'
 import { Provider as JotaiProvider } from 'jotai'
 import { HelmetProvider } from 'react-helmet-async'
-import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
-import { trpc } from '~/utils/trpc'
+import { useNavigate, useRoutes } from 'react-router-dom'
+import { useTrpc } from '~/utils/trpc'
 import routes from '~react-pages'
-import { useClientAuthState } from '~/utils/hooks/authState'
 import { Meta } from './Meta'
 import { theme } from '~/utils/chakra-theme'
 import { GA4 } from './GA4'
-import { CombinedDataTransformer } from '@trpc/server'
-import SuperJSON from 'superjson'
+import { useClientAuthState } from '~/utils/hooks/use-auth-state'
 
 export const PageShell = () => {
     const queryClient = useMemo(() => new QueryClient(), [])
     const navigate = useNavigate()
-    const location = useLocation().pathname
     const { authState } = useClientAuthState()
-
-    const transformer: CombinedDataTransformer = {
-        input: SuperJSON,
-        output: {
-            serialize: (object) => object,
-            // This `eval` only ever happens on the **client**
-            deserialize: (object) => eval(object),
-        },
-    }
+    const { trpc, trpcClient } = useTrpc()
 
     const helmetContext = {}
-    const trpcClient = useMemo(
-        () =>
-            trpc.createClient({
-                links: [
-                    httpBatchLink({
-                        url: process.env.HTTP_BATCH_LINK as string,
-                        ...(authState &&
-                            authState.access_token && {
-                                headers: { authorization: 'Bearer ' + authState.access_token },
-                            }),
-                        transformer,
-                    }),
-                ],
-            }),
-        [authState],
-    )
+
     useEffect(() => {
-        if ((!authState || !authState.access_token) && location !== '/login') navigate('/login')
+        if (!authState || !authState.access_token) navigate('/login')
     }, [authState])
 
     return (
@@ -59,7 +33,13 @@ export const PageShell = () => {
                             <HelmetProvider context={helmetContext}>
                                 <GA4 trackingCode={process.env.GA4_ID!} isEnable={process.env.STAGE !== 'local'} />
                                 <Meta />
-                                <Suspense fallback={<p>Loading...</p>}>
+                                <Suspense
+                                    fallback={
+                                        <Flex h={'100vh'} justifyContent={'center'} alignItems={'center'} w={'full'}>
+                                            <Spinner />
+                                        </Flex>
+                                    }
+                                >
                                     {<ErrorBoundary>{useRoutes(routes)}</ErrorBoundary>}
                                 </Suspense>
                             </HelmetProvider>

@@ -52,7 +52,7 @@ export const useUtilityFunction = () => {
      * @returns {function(ProcedureResolveOption<TInput>): Promise<TOutput>} A function that takes options and returns a promise that resolves to the result of the procedure function.
      */
     const procedureFunction =
-        <TInput, TOutput = {}>(
+        <TInput, TOutput = void>(
             cb: (opts: ProcedureResolveOption<TInput>) => Promise<TOutput>,
         ): ((opts: ProcedureResolveOption<TInput>) => Promise<TOutput>) =>
         async (opts: ProcedureResolveOption<TInput>) =>

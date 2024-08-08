@@ -19,7 +19,18 @@ export const clientAuthRouter = router({
      * @output {LoginResponseSchema} - The response schema containing the login details.
      * @mutation {Function} signIn - The mutation function to sign in a user.
      */
-    signin: publicProcedure.input(loginRequestSchema).output(loginResponseSchema).mutation(signIn),
+    signin: publicProcedure
+        .meta({
+            openapi: {
+                method: 'POST',
+                path: '/api/client.auth.signin',
+                description: 'A procedure route to signin client',
+                tags: ['ClientAuthRouter'],
+            },
+        })
+        .input(loginRequestSchema)
+        .output(loginResponseSchema)
+        .mutation(signIn),
 
     /**
      * Refreshes the authentication token for a client user.
@@ -30,5 +41,17 @@ export const clientAuthRouter = router({
      * @output {RefreshResponseSchema} - The response schema containing the new token.
      * @mutation {Function} refreshToToken - The mutation function to refresh the token.
      */
-    refresh: privateProcedure.input(refreshRequestSchema).output(refreshResponseSchema).query(refreshToToken),
+    refresh: privateProcedure
+        .meta({
+            openapi: {
+                method: 'GET',
+                path: '/api/client.auth.refresh',
+                description: 'A procedure route to get refresh token',
+                tags: ['ClientAuthRouter'],
+                protect: true,
+            },
+        })
+        .input(refreshRequestSchema)
+        .output(refreshResponseSchema)
+        .query(refreshToToken),
 })

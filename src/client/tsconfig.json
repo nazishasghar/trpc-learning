@@ -15,8 +15,8 @@
         "moduleResolution": "Bundler",
         "resolveJsonModule": true,
         "isolatedModules": true,
+        "declaration": false,
         "jsx": "react-jsx",
-        "composite": true,
         "incremental": true,
         "baseUrl": ".",
         "paths": {

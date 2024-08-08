@@ -43,9 +43,9 @@ export const useTrpc = () => {
                                     authorization: 'Bearer ' + accessToken.access_token,
                                 },
                             }),
-                        transformer,
                     }),
                 ],
+                transformer,
             }),
         [accessToken],
     )

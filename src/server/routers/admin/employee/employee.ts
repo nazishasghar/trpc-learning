@@ -19,7 +19,19 @@ export const adminEmployeeRouter = t.router({
      * @output {EmployeeListResponseSchema} - The response schema containing the list of employees.
      * @query {Function} listEmployees - The query function to list employees.
      */
-    list: privateProcedure.input(commonListRequestSchema).output(employeeListResponseSchema).query(listEmployees),
+    list: privateProcedure
+        .meta({
+            openapi: {
+                method: 'GET',
+                path: '/api/admin.employee.list',
+                description: 'A procedure route to get list of employee',
+                tags: ['AdminEmployeeRouter'],
+                protect: true,
+            },
+        })
+        .input(commonListRequestSchema)
+        .output(employeeListResponseSchema)
+        .query(listEmployees),
 
     /**
      * Fetches an employee by their UUID.
@@ -30,5 +42,17 @@ export const adminEmployeeRouter = t.router({
      * @output {EmployeeGetResponseSchema} - The response schema containing the employee details.
      * @query {Function} getEmployee - The query function to get an employee.
      */
-    getEmployee: privateProcedure.input(employeeGetRequestSchema).output(employeeGetResponseSchema).query(getEmployee),
+    getEmployee: privateProcedure
+        .meta({
+            openapi: {
+                method: 'GET',
+                path: '/api/admin.employee.getEmployee',
+                description: 'A procedure route to get employee',
+                tags: ['AdminEmployeeRouter'],
+                protect: true,
+            },
+        })
+        .input(employeeGetRequestSchema)
+        .output(employeeGetResponseSchema)
+        .query(getEmployee),
 })

@@ -35,7 +35,7 @@ export const useAdminFeedBackService = () => {
      *
      * @returns {Promise<FeedBack>} A promise that resolves to the created FeedBack.
      */
-    const createFeedBack = procedureFunction<CreateFeedBackSchema>(async (opts) => {
+    const createFeedBack = procedureFunction<CreateFeedBackSchema, FeedbackGetResponseSchema>(async (opts) => {
         const employee = await manager.findOne(EmployeeEntities, {
             where: { uuid: opts.input.employeeId },
             relations: { leader: true },
@@ -68,7 +68,7 @@ export const useAdminFeedBackService = () => {
      *
      * @returns {Promise<FeedBack>} A promise that resolves to the updated FeedBack.
      */
-    const editFeedBack = procedureFunction<EditFeedBackSchema>(async (opts) => {
+    const editFeedBack = procedureFunction<EditFeedBackSchema, FeedbackGetResponseSchema>(async (opts) => {
         const feedBack = await manager.findOne(FeedBackEntities, {
             where: { uuid: opts.input.feedBackId },
             relations: { feedBackBy: true },
@@ -102,7 +102,7 @@ export const useAdminFeedBackService = () => {
         if (feedBack.feedBackBy.uuid !== (opts.ctx.user as AdminEntities).uuid)
             throw new TRPCError({ code: 'BAD_REQUEST', message: 'The user is not authorized to edit this FeedBack' })
 
-        return await manager.softDelete(FeedBackEntities, { uuid: feedBack.uuid })
+        await manager.softDelete(FeedBackEntities, { uuid: feedBack.uuid })
     })
 
     /**

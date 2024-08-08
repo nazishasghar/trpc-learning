@@ -15,6 +15,15 @@ export const clientFeedBackRouter = t.router({
      * @query {Function} listFeedBack - The query function to list feedback.
      */
     list: privateProcedure
+        .meta({
+            openapi: {
+                method: 'GET',
+                path: '/api/client.feedback.list',
+                description: 'A procedure route to client feedback list',
+                tags: ['ClientFeedbackRouter'],
+                protect: true,
+            },
+        })
         .input(employeeFeedBackListRequestSchema)
         .output(employeeFeedBackListResponseSchema)
         .query(listFeedBack),

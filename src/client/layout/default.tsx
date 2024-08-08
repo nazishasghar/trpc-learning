@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react'
 import { Flex } from '@chakra-ui/react'
 import { GHeader } from '~/components/global/gHeader/GHeader'
-import { useClientAuthState } from '~/utils/hooks/authState'
+import { useClientAuthState } from '~/utils/hooks/use-auth-state'
 
 export type DefaultLayoutProps = {
     children?: ReactNode
