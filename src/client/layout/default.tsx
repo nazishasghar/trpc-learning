@@ -18,9 +18,13 @@ export const DefaultLayoutView: FC<DefaultLayoutProps & ReturnType<typeof useDef
     const { children, authState } = props
 
     return (
-        <Flex direction={'column'}>
+        <Flex direction={'column'} w={'full'} justify={'center'} bgColor={'black'} py={'1rem'} gap={'1rem'}>
             {authState?.access_token && <GHeader />}
-            {children}
+            <Flex w={'full'} justify={'center'}>
+                <Flex direction={'column'} maxW={'65rem'} w={'full'}>
+                    {children}
+                </Flex>
+            </Flex>
         </Flex>
     )
 }

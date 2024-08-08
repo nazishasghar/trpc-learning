@@ -1,52 +1,147 @@
-import { Button, Input } from '@chakra-ui/react'
-import { useEffect, useRef, type FC } from 'react'
+import {
+    Avatar,
+    Box,
+    Button,
+    chakra,
+    Flex,
+    FormControl,
+    FormHelperText,
+    Heading,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    InputRightElement,
+    Link,
+    Stack,
+} from '@chakra-ui/react'
+import { useState, type FC } from 'react'
 import { useNavigate } from 'react-router'
-import { DefaultLayout } from '~/layout/default'
+import { FaUserAlt, FaLock } from 'react-icons/fa'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useClientAuthState } from '~/utils/hooks/use-auth-state'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTrpc } from '~/utils/trpc'
+import { DefaultLayout } from '~/layout/default'
+import { loginSchema, LoginSchema } from '~/types/zodSchema'
 // logic
 const useLoginPage = () => {
-    return {}
+    const CFaUserAlt = chakra(FaUserAlt)
+    const CFaLock = chakra(FaLock)
+
+    const { trpc } = useTrpc()
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isValid },
+    } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema), mode: 'onBlur' })
+
+    const loginMutation = trpc.client.auth.signin.useMutation()
+
+    const { setAuthState } = useClientAuthState()
+
+    const navigate = useNavigate()
+
+    const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
+        return await loginMutation.mutateAsync(data, {
+            onSuccess: (res) => {
+                setAuthState({ ...res, expires_in: String(res.expires_in) })
+                navigate('/')
+            },
+        })
+    }
+
+    const [showPassword, setShowPassword] = useState(false)
+
+    const handleShowClick = () => setShowPassword(!showPassword)
+    return {
+        register,
+        handleShowClick,
+        handleSubmit,
+        isValid,
+        CFaLock,
+        CFaUserAlt,
+        errors,
+        onSubmit,
+        showPassword,
+    }
 }
 
 // view
-const LoginPageView: FC<ReturnType<typeof useLoginPage>> = () => {
-    const emailRef = useRef<HTMLInputElement>(null)
-    const passwordRef = useRef<HTMLInputElement>(null)
-    const { trpc } = useTrpc()
-    const { authState, setAuthState } = useClientAuthState()
-    const navigate = useNavigate()
-
-    const mutate = trpc.client.auth.signin.useMutation()
-
-    useEffect(() => {
-        if (authState && authState.access_token) navigate('/')
-    }, [authState])
-
-    const onLoginMutation = async () => {
-        if (!emailRef.current?.value || !passwordRef.current?.value) return
-        return await mutate.mutateAsync(
-            {
-                email: emailRef.current?.value,
-                password: passwordRef.current?.value,
-            },
-            {
-                onSuccess: (data) => {
-                    setAuthState({
-                        ...data,
-                        expires_in: String(data.expires_in),
-                    })
-                    navigate('/')
-                },
-            },
-        )
-    }
-
+const LoginPageView: FC<ReturnType<typeof useLoginPage>> = (props) => {
+    const { register, handleShowClick, handleSubmit, isValid, CFaLock, CFaUserAlt, errors, onSubmit, showPassword } =
+        props
     return (
         <DefaultLayout>
-            <Input ref={emailRef} placeholder="Email" />
-            <Input ref={passwordRef} placeholder="Password" />
-            <Button onClick={onLoginMutation}>Log in</Button>
+            <Flex
+                flexDirection="column"
+                width="100wh"
+                height="100vh"
+                justifyContent="center"
+                alignItems="center"
+                pointerEvents={'all'}
+            >
+                <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
+                    <Avatar bg="teal.500" />
+                    <Heading color="teal.400">Welcome</Heading>
+                    <Box minW={{ base: '90%', md: '468px' }}>
+                        <form>
+                            <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">
+                                <FormControl>
+                                    <InputGroup>
+                                        <InputLeftElement
+                                            pointerEvents="none"
+                                            children={<CFaUserAlt color="gray.300" />}
+                                        />
+                                        <Input
+                                            {...register('email')}
+                                            type="email"
+                                            placeholder="email address"
+                                            isInvalid={!!errors.email}
+                                            errorBorderColor={'red.500'}
+                                        />
+                                    </InputGroup>
+                                </FormControl>
+                                <FormControl>
+                                    <InputGroup>
+                                        <InputLeftElement
+                                            pointerEvents="none"
+                                            color="gray.300"
+                                            children={<CFaLock color="gray.300" />}
+                                        />
+                                        <Input
+                                            {...register('password')}
+                                            type={showPassword ? 'text' : 'password'}
+                                            placeholder="Password"
+                                            isInvalid={!!errors.password}
+                                            errorBorderColor={'red.500'}
+                                        />
+                                        <InputRightElement width="4.5rem">
+                                            <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                                                {showPassword ? 'Hide' : 'Show'}
+                                            </Button>
+                                        </InputRightElement>
+                                    </InputGroup>
+                                    <FormHelperText textAlign="right">
+                                        <Link>forgot password?</Link>
+                                    </FormHelperText>
+                                </FormControl>
+                                <Button
+                                    disabled={!isValid}
+                                    onClick={handleSubmit(onSubmit)}
+                                    _disabled={{ opacity: '0.3' }}
+                                    borderRadius={0}
+                                    variant="solid"
+                                    colorScheme="teal"
+                                    width="full"
+                                >
+                                    Login
+                                </Button>
+                            </Stack>
+                        </form>
+                    </Box>
+                </Stack>
+            </Flex>
         </DefaultLayout>
     )
 }

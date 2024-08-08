@@ -22,6 +22,7 @@ export const PageShell = () => {
 
     useEffect(() => {
         if (!authState || !authState.access_token) navigate('/login')
+        else navigate('/')
     }, [authState])
 
     return (

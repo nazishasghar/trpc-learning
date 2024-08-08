@@ -3,6 +3,7 @@ import { useClientAuthState } from '~/utils/hooks/use-auth-state'
 import dayjs from 'dayjs'
 import { useTrpc } from '~/utils/trpc'
 import { Flex, Text } from '@chakra-ui/react'
+import { useNavigate } from 'react-router'
 
 export type GHeaderProps = {
     children?: ReactNode
@@ -11,6 +12,8 @@ export type GHeaderProps = {
 // logic
 export const useGHeader = () => {
     const { authState, setAuthState, removeAuth } = useClientAuthState()
+
+    const navigate = useNavigate()
 
     const { trpc } = useTrpc()
 
@@ -33,15 +36,36 @@ export const useGHeader = () => {
         }
     }, [authData, isError])
 
-    return {}
+    return {
+        navigate,
+    }
 }
 
 // view
-export const GHeaderView: FC<GHeaderProps & ReturnType<typeof useGHeader>> = () => {
+export const GHeaderView: FC<GHeaderProps & ReturnType<typeof useGHeader>> = (props) => {
+    const { navigate } = props
     return (
-        <Flex data-testid="g-header" bgColor={'black'} justify={'start'} h={'2rem'}>
-            <Text fontSize={'large'} color={'white'}>
-                Header
+        <Flex
+            data-testid="g-header"
+            bgColor={'#414245'}
+            justify={'start'}
+            h={'3rem'}
+            borderRadius={'10px'}
+            px={'1rem'}
+            mx={'1rem'}
+            backdropBlur={'20px'}
+            alignItems={'center'}
+            zIndex={1}
+        >
+            <Text
+                onClick={() => navigate('/')}
+                cursor={'pointer'}
+                pointerEvents={'all'}
+                fontFamily={'cursive'}
+                fontSize={'large'}
+                color={'white'}
+            >
+                FeedBack
             </Text>
         </Flex>
     )
