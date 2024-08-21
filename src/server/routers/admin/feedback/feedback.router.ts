@@ -27,7 +27,7 @@ export const adminfeedBackRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/admin.feedback.create',
+                path: '/admin.feedback.create',
                 description: 'A procedure route to create feedback',
                 tags: ['AdminFeedbackRouter'],
                 protect: true,
@@ -49,7 +49,7 @@ export const adminfeedBackRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/admin.feedback.edit',
+                path: '/admin.feedback.edit',
                 description: 'A procedure route to edit feedback',
                 tags: ['AdminFeedbackRouter'],
                 protect: true,
@@ -71,7 +71,7 @@ export const adminfeedBackRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/admin.feedback.delete',
+                path: '/admin.feedback.delete',
                 description: 'A procedure route to delete feedback',
                 tags: ['AdminFeedbackRouter'],
                 protect: true,
@@ -100,7 +100,7 @@ export const adminfeedBackRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/admin.feedback.employeeFeedbackList/{employeeId}',
+                path: '/admin.feedback.employeeFeedbackList/{employeeId}',
                 description: 'A procedure route to employee feedback list',
                 tags: ['AdminFeedbackRouter'],
                 protect: true,
@@ -124,7 +124,7 @@ export const adminfeedBackRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/admin.feedback.getFeedbackWithUuid/{feedbackId}',
+                path: '/admin.feedback.getFeedbackWithUuid/{feedbackId}',
                 description: 'A procedure route to feedback with uuid',
                 tags: ['AdminFeedbackRouter'],
                 protect: true,

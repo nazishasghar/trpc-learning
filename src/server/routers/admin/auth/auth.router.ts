@@ -47,7 +47,7 @@ export const adminAuthRouter = router({
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/api/admin.auth.refresh/{refresh_token}',
+                path: '/admin.auth.refresh/{refresh_token}',
                 description: 'A procedure route to get refresh token',
                 tags: ['AdminAuthRouter'],
                 protect: true,
@@ -69,7 +69,7 @@ export const adminAuthRouter = router({
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/api/admin.auth.getMe',
+                path: '/admin.auth.getMe',
                 description: 'A procedure route to get logged in admin details',
                 tags: ['AdminAuthRouter'],
                 protect: true,

@@ -23,7 +23,7 @@ export const clientFeedBackRouter = t.router({
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/api/client.feedback.list',
+                path: '/client.feedback.list',
                 description: 'A procedure route to client feedback list',
                 tags: ['ClientFeedbackRouter'],
                 protect: true,
@@ -47,7 +47,7 @@ export const clientFeedBackRouter = t.router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/client.feedback.getFeedbackWithUuid',
+                path: '/client.feedback.getFeedbackWithUuid',
                 description: 'A procedure route to feedback with uuid',
                 tags: ['ClientFeedbackRouter'],
                 protect: true,

@@ -76,7 +76,7 @@ const LoginPageView: FC<ReturnType<typeof useLoginPage>> = () => {
             >
                 <Stack flexDir="column" mb="2" justifyContent="center" alignItems="center">
                     <Avatar bg="teal.500" />
-                    <Heading color="teal.400">Welcome</Heading>
+                    <Heading color="teal.400">Welcome Admin</Heading>
                     <Box minW={{ base: '90%', md: '468px' }}>
                         <form>
                             <Stack spacing={4} p="1rem" backgroundColor="whiteAlpha.900" boxShadow="md">

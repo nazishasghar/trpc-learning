@@ -4,5 +4,9 @@ export type OmitAndPickPartial<T, OmitType extends keyof T, PickType extends key
 > &
     Partial<Pick<T, PickType>>
 
-export type OmitBaseProp<T> = Omit<T, 'createdAt' | 'updatedAt' | 'deletedAt' | 'id'>
+type OmitKeys = 'createdAt' | 'updatedAt' | 'deletedAt' | 'id' | 'password'
+
+export type OmitBaseProp<T> = {
+    [P in keyof T as P extends OmitKeys ? never : P]: OmitBaseProp<T[P]>
+}
 export const position = ['CEO', 'CTO', 'COO', 'M3', 'M2', 'M1', 'J2', 'J1', 'B1', 'S1', 'S2'] as const

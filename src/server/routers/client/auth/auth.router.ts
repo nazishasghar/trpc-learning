@@ -23,7 +23,7 @@ export const clientAuthRouter = router({
         .meta({
             openapi: {
                 method: 'POST',
-                path: '/api/client.auth.signin',
+                path: '/client.auth.signin',
                 description: 'A procedure route to signin client',
                 tags: ['ClientAuthRouter'],
             },
@@ -45,7 +45,7 @@ export const clientAuthRouter = router({
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/api/client.auth.refresh/{refresh_token}',
+                path: '/client.auth.refresh/{refresh_token}',
                 description: 'A procedure route to get refresh token',
                 tags: ['ClientAuthRouter'],
                 protect: true,

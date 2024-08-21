@@ -4,11 +4,11 @@ import { clientRouter } from '~/routers/client/client.router'
 import { z } from 'zod'
 
 export const baseRouter = router({
-    health: publicProcedure
+    hc: publicProcedure
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/api/health',
+                path: '/health',
                 description: 'A procedure route for health check',
                 tags: ['RouterHealthCheck'],
             },
