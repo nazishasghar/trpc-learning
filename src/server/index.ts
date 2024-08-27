@@ -2,7 +2,6 @@ import { fastifyTRPCPlugin, FastifyTRPCPluginOptions } from '@trpc/server/adapte
 import Fastify from 'fastify'
 import { createContext } from '~/utils/context'
 import cors from '@fastify/cors'
-import dotenv from 'dotenv'
 import { AppDataSource } from '~/data-source'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
@@ -13,12 +12,6 @@ import { Logger } from 'tslog'
 import { fastifyTRPCOpenApiPlugin } from 'trpc-openapi'
 import { openApiDocument } from './swagger'
 
-const stage = process.env.STAGE || 'local'
-process.env.STAGE = stage
-
-dotenv.config({ path: '../../config/.env' })
-dotenv.config({ path: `../../config/.${stage}.env` })
-console.log(`stage: ${stage}`)
 const logger = new Logger()
 
 const app = Fastify()

@@ -8,6 +8,7 @@ const stage = process.env.STAGE || 'local'
 process.env.STAGE = stage
 
 dotenv.config({ path: `../../config/.env` })
+dotenv.config({ path: `../../config/${stage}.env` })
 
 const DB_URL = process.env[process.env.NODE_ENV === 'test' ? 'DB_URL_TEST' : 'DATABASE_URL']!
 
@@ -15,7 +16,7 @@ export const AppDataSource = new DataSource({
     type: 'mysql',
     url: DB_URL,
     synchronize: false,
-    entities: [path.resolve(__dirname,`entities/**/*.entities.{ts,js}`)],
+    entities: [path.resolve(__dirname, `entities/**/*.entities.{ts,js}`)],
     migrations: [path.resolve(__dirname, `db/migrations/**/*.{ts,js}`)],
     subscribers: [path.resolve(__dirname, `db/subscribers/**/*.{ts,js}`)],
     charset: 'utf8mb4',
