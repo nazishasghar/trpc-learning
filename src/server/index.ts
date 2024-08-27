@@ -10,13 +10,15 @@ import helmet from '@fastify/helmet'
 import { BaseRouter, baseRouter } from '~/baseRouter'
 import fmp from '@fastify/multipart'
 import { Logger } from 'tslog'
-import { TRPCError } from '@trpc/server'
 import { fastifyTRPCOpenApiPlugin } from 'trpc-openapi'
 import { openApiDocument } from './swagger'
 
-dotenv.config({ path: `../../config/prod.env` })
-dotenv.config({ path: '../../config/.env' })
+const stage = process.env.STAGE || 'local'
+process.env.STAGE = stage
 
+dotenv.config({ path: '../../config/.env' })
+dotenv.config({ path: `../../config/.${stage}.env` })
+console.log(`stage: ${stage}`)
 const logger = new Logger()
 
 const app = Fastify()
@@ -40,21 +42,25 @@ const main = async () => {
         } as FastifyTRPCPluginOptions<BaseRouter>['trpcOptions'],
     })
 
-    await app.register(fastifyTRPCOpenApiPlugin, { router: baseRouter, prefix: '/api' })
+    if (process.env.NODE_ENV !== 'production') {
+        await app.register(fastifyTRPCOpenApiPlugin, { router: baseRouter, prefix: '/api' })
 
-    app.get('/openapi.json', () => openApiDocument)
+        app.get('/openapi.json', () => openApiDocument)
 
-    await app.register(fastifySwagger, {
-        specification: { document: openApiDocument },
-        mode: 'static',
-    })
+        await app.register(fastifySwagger, {
+            specification: { document: openApiDocument },
+            mode: 'static',
+        })
 
-    await app.register(fastifySwaggerUi, {
-        prefix: '/docs',
-        uiConfig: {
-            deepLinking: false,
-        },
-    })
+        await app.register(fastifySwaggerUi, {
+            prefix: '/docs',
+            uiConfig: {
+                deepLinking: false,
+            },
+        })
+
+        app.swagger()
+    }
 
     app.addHook('onRequest', async (_, reply) => {
         if (isHTTPS) reply.header('Content-Security-Policy', 'upgrade-insecure-requests')
@@ -68,8 +74,6 @@ const main = async () => {
         hsts: isHTTPS,
     })
 
-    app.swagger()
-
     await app
         .listen({ port: Number(process.env.PORT) })
         .then(() => {
@@ -77,10 +81,10 @@ const main = async () => {
             logger.info(`Swagger started on http://localhost:${process.env.PORT}/docs`)
         })
         .catch((err) => {
-            logger.error(err instanceof TRPCError)
+            logger.error(err)
         })
 }
 
 AppDataSource.initialize()
     .then(async () => await main())
-    .catch((err) => logger.error(err instanceof TRPCError))
+    .catch((err) => logger.error(err))

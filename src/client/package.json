@@ -5,22 +5,7 @@
     "scripts": {
         "dev": "vite dev",
         "scaffdog:component": "scaffdog generate component",
-        "scaffdog:page": "scaffdog generate page",
-        "build": "npm run build:chakra && cross-env NODE_ENV=production vite build",
-        "build:chakra": "chakra-cli tokens ./utils/chakra-theme.ts",
-        "clear": "rimraf .bundle .pages dist out node_modules/.vite node_modules/.vite-storybook node_modules/.cache",
-        "init": "run-p build:routes build:api build:chakra",
-        "lint": "npm-run-all lint:*",
-        "lint:code": "eslint --cache --cache-location node_modules/.cache/eslint/ --cache-strategy content --ext .ts,.js,.vue,.jsx,.tsx --max-warnings 0 .",
-        "fix": "npm-run-all fix:*",
-        "fix:code": "npm run lint:code -- --fix",
-        "fix:prettier": "prettier --config .prettierrc --ignore-path .eslintignore --write '**/*.{js,json,html,vue,ts,jsx,tsx,mjs,tjs,cjs}'",
-        "test": "vitest --watch --reporter=default --reporter=junit",
-        "test:ui": "vitest --watch --reporter=default --reporter=junit --ui",
-        "test:cov": "vitest run --reporter=default --reporter=junit --coverage",
-        "test:ci": "vitest run --reporter=default --reporter=junit --coverage --passWithNoTests",
-        "test:cov:result": "opener ./.pages/cov/index.html",
-        "storybook": "storybook dev -p 6006"
+        "scaffdog:page": "scaffdog generate page"
     },
     "keywords": [],
     "author": "",

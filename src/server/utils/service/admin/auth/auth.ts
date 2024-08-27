@@ -31,7 +31,7 @@ export const useAdminAuthService = () => {
      * @returns {Promise<string>} A promise that resolves to the signed token.
      */
     const signToken = async (user: AdminEntities) => {
-        return await jwtAsyncSignIn({ uuid: user.uuid }, process.env.JWTSECRET as string, '30min')
+        return await jwtAsyncSignIn({ uuid: user.uuid }, '30min')
     }
 
     /**

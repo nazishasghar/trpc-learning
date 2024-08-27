@@ -5,7 +5,12 @@ import jotaiDebugLabel from 'jotai/babel/plugin-debug-label'
 import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh'
 import * as dotenv from 'dotenv'
 
+const stage = process.env.STAGE || 'local'
+process.env.STAGE = stage
+
 dotenv.config({ path: '../../config/.env' })
+dotenv.config({ path: `../../config/.${stage}.env` })
+console.log(`stage: ${stage}`)
 
 export default defineConfig({
     plugins: [

@@ -29,8 +29,7 @@ export const useClientAuthService = () => {
      * @param {Employee} employee - The employee for whom the token is to be signed.
      * @returns {Promise<string>} A promise that resolves to the signed token.
      */
-    const signToken = async (employee: EmployeeEntities) =>
-        await jwtAsyncSignIn({ uuid: employee.uuid }, process.env.JWTSECRET as string, '30min')
+    const signToken = async (employee: EmployeeEntities) => await jwtAsyncSignIn({ uuid: employee.uuid }, '30min')
 
     /**
      * Signs in a user by validating their credentials and generating access and refresh tokens.

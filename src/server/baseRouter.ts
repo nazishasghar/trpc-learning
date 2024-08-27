@@ -8,7 +8,7 @@ export const baseRouter = router({
         .meta({
             openapi: {
                 method: 'GET',
-                path: '/health',
+                path: '/hc',
                 description: 'A procedure route for health check',
                 tags: ['RouterHealthCheck'],
             },
