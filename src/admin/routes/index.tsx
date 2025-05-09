@@ -1,44 +1,46 @@
-import { Button } from '@chakra-ui/react'
-import { useEffect, type FC } from 'react'
-import { RouterInputs, trpc } from '~/utils/trpc'
+import { Flex } from '@chakra-ui/react'
+import { useEffect, useMemo, type FC } from 'react'
+import { DefaultLayout } from '~/layout/default'
+import { useTrpc } from '~/utils/trpc'
+import Spline from '@splinetool/react-spline'
+import { CEmployeeRow } from '~/components/common/cEmployeeRow/CEmployeeRow'
+import { useAdminAuthState } from '~/utils/hooks/use-auth-state'
 
 // logic
 const useIndexPage = () => {
-    const { data } = trpc.user.list.useQuery()
-    const utils = trpc.useUtils()
-    const list = data?.[0].map((i) => i)
+    const { trpc } = useTrpc()
 
-    const mutate = trpc.user.create.useMutation()
+    const { setMe } = useAdminAuthState()
 
-    const onCreateHandler = async () => {
-        mutate.mutate(
-            {
-                name: 'Nazish',
-                email: `madara+004@notespace.jp`,
-                address: 'Patna, India',
-            },
-            { onSuccess: () => utils.user.list.refetch() },
-        )
-    }
-    return {
-        list,
-        onCreateHandler,
-    }
+    const { data: employees } = trpc.admin.employee.list.useQuery({})
+
+    const { data: admin } = trpc.admin.auth.getMe.useQuery(undefined)
+
+    useEffect(() => {
+        setMe(admin)
+    }, [admin])
+
+    const employeeList = useMemo(
+        () => employees?.[0].map((i) => <CEmployeeRow key={i.uuid} employee={i} />),
+        [employees],
+    )
+    return { employeeList }
 }
 
 // view
 const IndexPageView: FC<ReturnType<typeof useIndexPage>> = (props) => {
-    const { list, onCreateHandler } = props
-
+    const { employeeList } = props
     return (
-        <>
-            {list?.map((i) => (
-                <h1 key={i.uuid}>{JSON.stringify(i)}</h1>
-            ))}
-            <Button colorScheme="blue" onClick={onCreateHandler}>
-                Add
-            </Button>
-        </>
+        <DefaultLayout>
+            <Flex position={'relative'} w={'full'}>
+                <Flex gap={'0.5rem'} direction={'column'} px={'5rem'} zIndex={1} w={'full'}>
+                    {employeeList}
+                </Flex>
+                <Flex pos={'fixed'} w={'full'} h={'full'} top={'-10'} left={'-2%'}>
+                    <Spline scene="https://prod.spline.design/V05N0PsDPyZ1kAEm/scene.splinecode" />
+                </Flex>
+            </Flex>
+        </DefaultLayout>
     )
 }
 
